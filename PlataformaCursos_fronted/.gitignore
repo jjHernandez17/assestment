@@ -1,0 +1,39 @@
+# .gitignore para el frontend (Node / Vite / Vue)
+
+# Node
+node_modules/
+
+# Build output
+dist/
+build/
+
+# Vite cache
+.vite/
+.cache/
+
+# Environment files
+.env
+.env.*.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor
+.vscode/
+.idea/
+.DS_Store
+
+# Static files generated
+coverage/
+
+# Dependency directories
+.pnp/
+.pnpm-debug.log
+
+# Misc
+*.log
+
+

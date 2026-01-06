@@ -1,0 +1,49 @@
+services:
+  # 1. Base de Datos (PostgreSQL)
+  db:
+    image: postgres:16-alpine
+    container_name: cursos_db_cont
+    restart: always
+    environment:
+      POSTGRES_USER: user_admin
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: cursos_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # 2. Backend (API .NET 8)
+  api:
+    build:
+      context: ./PlataformaCursos
+      dockerfile: PlataformaCursos.Api/Dockerfile
+    container_name: cursos_api_cont
+    depends_on:
+      - db
+    ports:
+      - "5276:8080"  # Mapeo: Externo 5276 -> Interno 8080
+    environment:
+      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=cursos_db;Username=user_admin;Password=password123
+      - JwtSettings__Key=Esta_Es_Una_Llave_Super_Secreta_Y_Larga_De_Prueba_123_ABC_456
+      - JwtSettings__Issuer=PlataformaCursosAPI
+      - JwtSettings__Audience=PlataformaCursosFrontend
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080
+      - DOTNET_RUNNING_IN_CONTAINER=true
+
+  # 3. Frontend (Vue.js + Nginx)
+  frontend:
+    build:
+      context: ./PlataformaCursos_fronted
+      dockerfile: Dockerfile
+    container_name: cursos_vue_cont
+    depends_on:
+      - api
+    ports:
+      - "5173:80"    # Mapeo: Externo 5173 -> Interno 80
+    environment:
+      - VITE_API_URL=http://localhost:5276/api
+
+volumes:
+  postgres_data:
