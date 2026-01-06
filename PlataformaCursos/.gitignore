@@ -1,0 +1,54 @@
+# .gitignore para el backend (.NET)
+
+.vscode/
+# dotnet user-specific
+
+*.temp
+*.tmp
+# Temporary
+
+appsettings.*.Local.json
+.env
+# Environment / secrets
+
+# /PlataformaCursos.Infrastructure/Migrations/
+# EF Core migration snapshot / generated DB files (si quieres excluir snapshots descomenta)
+
+publish/
+# Publish output
+
+*.DotSettings.user
+_ReSharper*/
+# Resharper
+
+project.lock.json
+packages/
+*.snupkg
+*.nupkg
+# NuGet
+
+Thumbs.db
+.DS_Store
+# OS files
+
+*.log
+# Logs
+
+*.iws
+*.ipr
+*.iml
+# Rider
+
+*.sln.docstates
+*.userosscache
+*.suo
+*.user
+.idea/
+.vs/
+# Visual Studio / Rider
+
+obj/
+bin/
+# Build outputs
+
+
